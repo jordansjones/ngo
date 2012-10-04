@@ -117,7 +117,11 @@ var writeDbFile = function () {
 };
 
 var echo = function (msg) {
-	util.puts(util.format('echo "%s"', msg));
+	var msg = util.format('echo "%s"', msg);
+	if (arguments.length > 1 && _.isBoolean(arguments[1]) && arguments[1]) {
+		return msg;
+	}
+	util.puts(msg);
 };
 
 var cd = function(path) {
@@ -129,9 +133,11 @@ var writeVersion = function () {
 };
 
 var listAliases = function () {
+	var v = [];
 	_.each(NGO_DB, function (val, key) {
-		echo(util.format("%s : %s", key, val));
+		v.push(echo(util.format("%s : %s", key, val), true));
 	});
+	util.puts(v.join(";"));
 };
 
 var saveAlias = function(alias) {
