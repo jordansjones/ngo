@@ -4,6 +4,7 @@ var optimist = require('optimist')
 	.string('s').alias('s', 'save').describe('s', 'Save current path to alias')
 	.string('r').alias('r', 'remove').describe('r', 'Remove alias')
 	.boolean('l').alias('l', 'list').describe('l', 'List aliases')
+	.boolean('c').alias('c', 'complete').describe('c', 'List aliases for Bash Completion')
 	.string('j').alias('j', 'jump').describe('j', 'Jump to location')
 	.boolean('h').alias('h', 'help').describe('h', 'Show this help')
 	// .boolean('version').describe('version', 'Show version')
@@ -53,7 +54,6 @@ var checkDirectory = function(dbFolder, cb) {
 		if (!exists) {
 			fs.mkdir(dbFolder, function (err) {
 				if (err) {
-					logger.debug("Error checkDirectory", err);
 					reportError(err);
 				}
 				cb();
@@ -132,12 +132,13 @@ var writeVersion = function () {
 	echo("writeVersion");
 };
 
-var listAliases = function () {
+var listAliases = function (forCompletion) {
+	forCompletion = forCompletion || false;
 	var v = [];
 	_.each(NGO_DB, function (val, key) {
-		v.push(echo(util.format("%s : %s", key, val), true));
+		v.push(forCompletion ? key : echo(util.format("%s : %s", key, val), true));
 	});
-	util.puts(v.join(";"));
+	util.puts(v.join(forCompletion ? "\n" : ";"));
 };
 
 var saveAlias = function(alias) {
@@ -168,6 +169,10 @@ var processCliArgs = function () {
 	else if (args.list) {
 		listAliases();
 	}
+	else if (args.complete)
+	{
+		listAliases(true);
+	}
 	else if (args.save && !isNullOrEmpty(args.save)) {
 		saveAlias(args.save);
 	}
@@ -188,7 +193,7 @@ if (!NGO_HOME) {
 	reportError("NGO_HOME is not defined as an environment variable.");
 }
 NGO_HOME = path.resolve(NGO_HOME);
-NGO_DB_FILE = path.join(NGO_HOME, "ngo.db");
+NGO_DB_FILE = path.join(NGO_HOME, "ngo.json");
 
 checkDirectory(NGO_HOME, function () {
 	checkFileExists(isDevMode);
