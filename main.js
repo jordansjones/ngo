@@ -19,7 +19,7 @@ var fs = require('fs'),
 	S = require('string'),
 	_ = require('underscore');
 
-S.clobberPrototype();
+S.extendPrototype();
 
 var NGO_DB_FILE = null;
 var NGO_DB = null;
