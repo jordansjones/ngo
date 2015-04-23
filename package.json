@@ -1,16 +1,18 @@
 {
-	"name": "ngo",
-	"description": "Enhanced version of 'cd' using Node",
-	"version": "0.0.1",
-	"author": "Jordan S. Jones <jordansjones@gmail.com>",
-	"dependencies": {
-		"optimist": "0.3.4",
-		"string": "1.0.0",
-		"underscore": "1.4.1"
-	},
-	"devDependencies": {
-		"tracer": "0.5.1"
-	},
-	"main": "./main.js",
-	"engines": { "node": ">= 0.8.11" }
+  "name": "ngo",
+  "description": "Enhanced version of 'cd' using Node",
+  "version": "0.0.1",
+  "author": "Jordan S. Jones <jordansjones@gmail.com>",
+  "homepage": "https://github.com/jordansjones/ngo",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "optimist": "^0.3.4",
+    "string": "^1.0.0",
+    "underscore": "^1.4.1"
+  },
+  "main": "./main.js",
+  "engines": {
+    "node": ">= 0.8.11"
+  }
 }
