@@ -121,11 +121,11 @@ var echo = function (msg) {
 	if (arguments.length > 1 && _.isBoolean(arguments[1]) && arguments[1]) {
 		return msg;
 	}
-	util.puts(msg);
+	console.log(msg);
 };
 
 var cd = function(path) {
-	util.puts(util.format('cd "%s"', path));
+	console.log(util.format('cd "%s"', path));
 };
 
 var writeVersion = function () {
@@ -138,7 +138,7 @@ var listAliases = function (forCompletion) {
 	_.each(NGO_DB, function (val, key) {
 		v.push(forCompletion ? key : echo(util.format("%s : %s", key, val), true));
 	});
-	util.puts(v.join(forCompletion ? "\n" : ";"));
+	console.log(v.join(forCompletion ? "\n" : ";"));
 };
 
 var saveAlias = function(alias) {
